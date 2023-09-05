@@ -9,15 +9,16 @@ SoftwareSerial SenderBoard(10,11); // (RX, TX)
 unsigned long anteriorMillis = 0;  
 unsigned long atualMillis = 0;  
 bool status_led = 0;
-String message = "desligar";
-unsigned int size_string = message.length();
+unsigned dado_raw=0x3FF;
 
 void setup() {
   // inicia a serial em software com uma taxa de 9600 bit/s
-  SenderBoard.begin(9600);
+  SenderBoard.begin(1200);
 
   // configura o pino do botao como entrada com resistor de pullup interno
   pinMode(Led_pin, OUTPUT);
+  
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -29,23 +30,24 @@ void loop() {
     anteriorMillis = atualMillis;
 
     status_led=!status_led;
-    if (status_led)
-    {
-      message="ligar";
-    }
-    else
-    {
-      message="desligar";
-    }
     
-    size_string = message.length(); 
-    uint8_t LSB = size_string;
-    uint8_t MSB = size_string >> 8;
+    //uint8_t LSB = dado_raw;
+    //uint8_t MSB = dado_raw >> 8;
+    //SenderBoard.write(LSB); // envia byte baixo
+    //SenderBoard.write(MSB); // envia byte alto
+    
+    uint8_t MSB = highByte(dado_raw); //0x3F em MSB
+    uint8_t LSB = lowByte(dado_raw);  //0xFF em LSB
+    
     SenderBoard.write(LSB); // envia byte baixo
     SenderBoard.write(MSB); // envia byte alto
-    delay(5);
-    SenderBoard.print(message); // envia todos os caracteres da mensagem via serial, um por um, usando tabela ASC
-
+    
+    Serial.print(dado_raw);
+    Serial.print(", MSB=");
+    Serial.print(MSB, HEX);
+    Serial.print(", LSB=");
+    Serial.println(LSB, HEX);
+    
     digitalWrite(Led_pin, status_led);
     
   }

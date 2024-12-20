@@ -2,7 +2,7 @@ import machine
 import utime
 
 #instancia canal serial 0 - pino GPIO26 
-analog_value = machine.ADC(26)
+analog_value = machine.ADC(machine.Pin(26))
  
 while True:
 # realiza leitura do ADC (0 a 65535)

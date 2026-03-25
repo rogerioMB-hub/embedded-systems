@@ -1,12 +1,44 @@
-# Receptor Serial – Raspberry Pi Pico
+# Receptor UART com LED – Raspberry Pi Pico
 
-Programa introdutório em MicroPython para receber bytes via USB
-e controlar o LED interno do Pico.
+Versão alternativa do primeiro programa, agora usando a **UART física**
+(pinos GP0/GP1) no lugar do USB_VCP. O Pico recebe 1 byte e controla
+o LED interno.
 
 ## Requisitos
 - Raspberry Pi Pico
 - MicroPython (RP2 port)
 - Thonny IDE
+- Adaptador USB-serial (ex: CP2102, CH340, FTDI)
+
+## Evolução em relação à versão anterior
+
+Na [versão original](../receptor_serial.py) usamos `USB_VCP`, que funciona
+pelo cabo USB do Thonny. Aqui migramos para a **UART0**, acessível pelos
+pinos físicos do Pico. A lógica do programa é a mesma — só o canal de
+comunicação mudou.
+
+## Ligação com o adaptador USB-serial
+
+```
+Pico GP0 (TX)  →  RX do adaptador
+Pico GP1 (RX)  →  TX do adaptador
+Pico GND       →  GND do adaptador
+```
+
+> ⚠️ Não conecte o 3.3V ou 5V do adaptador ao Pico enquanto ele estiver
+> alimentado pelo USB — use apenas o GND em comum.
+
+## Configuração da UART
+
+| Parâmetro | Valor   |
+|-----------|---------|
+| UART      | 0       |
+| TX        | GP0     |
+| RX        | GP1     |
+| Baudrate  | 115200  |
+| Bits      | 8       |
+| Paridade  | nenhuma |
+| Stop bits | 1       |
 
 ## Códigos suportados
 
@@ -17,21 +49,18 @@ e controlar o LED interno do Pico.
 
 Qualquer outro valor recebido exibe `Código desconhecido`.
 
-## Como usar
+## Como testar
 
-1. Grave o arquivo `receptor_serial.py` no Pico pelo Thonny
-2. Execute o programa
-3. No Shell do Thonny, envie bytes com:
+1. Conecte o adaptador USB-serial conforme a ligação acima
+2. Grave e execute `receptor_led_uart.py` no Pico pelo Thonny
+3. No computador, abra um terminal serial (ex: PuTTY, minicom, screen)
+   na porta do adaptador, com 115200 baud
+4. Envie os bytes pelo terminal:
+   - `0xAA` → LED acende
+   - `0x55` → LED apaga
 
-```python
-from machine import USB_VCP
-usb = USB_VCP()
-usb.write(bytes([0xAA]))  # acende o LED
-usb.write(bytes([0x55]))  # apaga o LED
-```
+## Próxima etapa
 
-## Objetivo
-
-Programa desenvolvido para introdução ao MicroPython com alunas e alunos
-iniciantes. O foco é mostrar, de forma simples, como o Pico pode receber
-dados e reagir a eles controlando um hardware real.
+Com a UART funcionando entre o Pico e o computador, o próximo passo é
+substituir o computador por outro Raspberry Pi Pico — conectando os pinos
+diretamente entre as duas placas.

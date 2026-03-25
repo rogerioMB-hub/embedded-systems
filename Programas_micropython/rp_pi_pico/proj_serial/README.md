@@ -13,14 +13,16 @@ um conceito novo, construindo sobre o anterior.
 
 ```
 📁 01_receptor_led/
-    receptor_serial.py      # Recebe byte e controla LED (if/elif)
+    receptor_serial.py       # Recebe byte e controla LED via USB_VCP
+    receptor_led_uart.py     # Mesma lógica, agora via UART física
     README.md
 
 📁 02_receptor_dicionario/
-    receptor_dicionario.py  # Recebe byte e consulta dicionário
+    receptor_dicionario.py   # Recebe byte e consulta dicionário via USB_VCP
+    receptor_uart.py         # Mesma lógica, agora via UART física
     README.md
 
-📁 03_...                   # em breve
+📁 03_...                    # em breve
 ```
 
 ---
@@ -28,16 +30,24 @@ um conceito novo, construindo sobre o anterior.
 ## Roteiro de aprendizado
 
 ### ✅ 01 – Receptor com LED (`if/elif`)
-Primeiro contato com a comunicação serial via USB_VCP.
-O Pico recebe 1 byte e reage a ele: acende ou apaga o LED interno.
+Primeiro contato com comunicação serial. O Pico recebe 1 byte e reage
+a ele: acende ou apaga o LED interno.
 
-Conceitos: `USB_VCP`, `read()`, `if/elif`, controle de hardware com `Pin`.
+Disponível em duas versões:
+- **USB_VCP** – usa o cabo USB do Thonny, sem hardware extra
+- **UART física** – usa os pinos GP0/GP1 com adaptador USB-serial
+
+Conceitos: `USB_VCP`, `UART`, `read()`, `if/elif`, controle de hardware com `Pin`.
 
 ---
 
 ### ✅ 02 – Receptor com dicionário
 O `if/elif` cresce rápido quando há muitos códigos. A solução é o dicionário:
 uma estrutura que mapeia chaves a valores de forma organizada e escalável.
+
+Disponível em duas versões:
+- **USB_VCP** – usa o cabo USB do Thonny, sem hardware extra
+- **UART física** – usa os pinos GP0/GP1 com adaptador USB-serial
 
 Conceitos: `dict`, operador `in`, consulta por chave.
 
@@ -47,7 +57,7 @@ Conceitos: `dict`, operador `in`, consulta por chave.
 O Pico não só recebe — ele também responde. Para cada byte recebido,
 envia de volta uma confirmação ou um dado.
 
-Conceitos: `usb.write()`, protocolo simples de requisição e resposta.
+Conceitos: `write()`, protocolo simples de requisição e resposta.
 
 ---
 
@@ -81,7 +91,23 @@ O `USB_VCP` permite testar tudo com o cabo USB que já conecta o Pico ao
 computador, sem fios extras. É a forma mais simples de começar.
 
 Quando o conceito estiver claro, a migração para a UART física é natural:
-a lógica é a mesma, só muda o canal.
+a lógica do programa é idêntica — só o canal de comunicação muda.
+Comparar as duas versões lado a lado é um ótimo exercício.
+
+---
+
+## Sobre a UART física
+
+A UART física usa os pinos GP0 (TX) e GP1 (RX) do Pico e requer um
+adaptador USB-serial (ex: CP2102, CH340, FTDI) para se conectar ao
+computador. É o mesmo canal que será usado futuramente para a comunicação
+direta entre dois Picos.
+
+```
+Pico GP0 (TX)  →  RX do adaptador
+Pico GP1 (RX)  →  TX do adaptador
+Pico GND       →  GND do adaptador
+```
 
 ---
 
@@ -90,3 +116,4 @@ a lógica é a mesma, só muda o canal.
 - Raspberry Pi Pico (RP2040)
 - MicroPython (RP2 port, versão atual)
 - Thonny IDE
+- Adaptador USB-serial (para exemplos com UART física)

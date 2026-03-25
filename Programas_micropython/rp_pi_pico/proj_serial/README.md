@@ -30,14 +30,13 @@ um conceito novo, construindo sobre o anterior.
 ## Roteiro de aprendizado
 
 ### ✅ 01 – Receptor com LED (`if/elif`)
-Primeiro contato com comunicação serial. O Pico recebe 1 byte e reage
-a ele: acende ou apaga o LED interno.
+Primeiro contato com comunicação serial. O Pico recebe 1 byte via UART
+física (GP0/GP1) e reage a ele: acende ou apaga o LED interno.
 
-Disponível em duas versões:
-- **USB_VCP** – usa o cabo USB do Thonny, sem hardware extra
-- **UART física** – usa os pinos GP0/GP1 com adaptador USB-serial
+O exemplo também está disponível em uma versão introdutória via USB_VCP,
+útil para quem ainda não tem o adaptador USB-serial em mãos.
 
-Conceitos: `USB_VCP`, `UART`, `read()`, `if/elif`, controle de hardware com `Pin`.
+Conceitos: `UART`, `any()`, `read()`, `if/elif`, controle de hardware com `Pin`.
 
 ---
 
@@ -45,9 +44,7 @@ Conceitos: `USB_VCP`, `UART`, `read()`, `if/elif`, controle de hardware com `Pin
 O `if/elif` cresce rápido quando há muitos códigos. A solução é o dicionário:
 uma estrutura que mapeia chaves a valores de forma organizada e escalável.
 
-Disponível em duas versões:
-- **USB_VCP** – usa o cabo USB do Thonny, sem hardware extra
-- **UART física** – usa os pinos GP0/GP1 com adaptador USB-serial
+Também disponível em versão USB_VCP para primeiros testes.
 
 Conceitos: `dict`, operador `in`, consulta por chave.
 
@@ -85,14 +82,16 @@ Conceitos: estrutura de pacote, ACK/NACK, robustez na comunicação.
 
 ---
 
-## Por que USB_VCP primeiro?
+## Por que UART física?
 
-O `USB_VCP` permite testar tudo com o cabo USB que já conecta o Pico ao
-computador, sem fios extras. É a forma mais simples de começar.
+A UART física (pinos GP0/GP1) é o canal que conecta o Pico a qualquer
+outro dispositivo — seja um computador via adaptador USB-serial, seja
+outra placa diretamente. É o caminho natural para quem quer ir além do
+ambiente de desenvolvimento.
 
-Quando o conceito estiver claro, a migração para a UART física é natural:
-a lógica do programa é idêntica — só o canal de comunicação muda.
-Comparar as duas versões lado a lado é um ótimo exercício.
+Os exemplos USB_VCP estão disponíveis como ponto de partida para quem
+ainda não tem o adaptador em mãos. A lógica do programa é idêntica —
+só o canal muda. Comparar as duas versões lado a lado é um ótimo exercício.
 
 ---
 

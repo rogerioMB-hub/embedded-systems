@@ -1,22 +1,15 @@
 # Receptor UART com Dicionário – Raspberry Pi Pico
 
-Terceira versão do receptor serial. Abandona o USB_VCP e passa a usar
-a **UART física** do Pico (pinos GP0/GP1), permitindo comunicação direta
-com outros dispositivos — sem depender do cabo USB do Thonny.
+Versão do receptor serial que emprega a **UART física** do Pico (pinos GP0/GP1), permitindo comunicação direta
+com outros dispositivos.
 
 ## Requisitos
 - Raspberry Pi Pico
 - MicroPython (RP2 port)
 - Thonny IDE
-- Adaptador USB-serial (ex: CP2102, CH340, FTDI)
+- Adaptador USB-serial (ex: CP2102, CH340, FTDI - já incluso nas placas RBP Pico e ESP32, p. ex.)
 
-## Evolução em relação à versão anterior
-
-Nas versões anteriores usamos `USB_VCP`, que funciona pelo cabo USB do Thonny.
-Aqui migramos para a **UART0**, acessível pelos pinos físicos do Pico.
-A lógica do programa é a mesma — só o canal de comunicação mudou.
-
-## Ligação com o adaptador USB-serial
+## Pinout para ligações futuras ou caso se utilize de placa adaptadora USB-serial
 
 ```
 Pico GP0 (TX)  →  RX do adaptador
@@ -57,11 +50,9 @@ Qualquer outro valor recebido exibe `fora do dicionário`.
 
 ## Como testar
 
-1. Conecte o adaptador USB-serial conforme a ligação acima
+1. Conecte o cabo USB na placa protótipo e no computador
 2. Grave e execute `receptor_uart.py` no Pico pelo Thonny
-3. No computador, abra um terminal serial (ex: PuTTY, minicom, screen)
-   na porta do adaptador, com 115200 baud
-4. Envie bytes pelo terminal — o Pico exibirá a resposta no Shell do Thonny
+3. Envie bytes pelo terminal — o Pico exibirá a resposta no Shell do Thonny
 
 ## Próxima etapa
 

@@ -73,6 +73,7 @@ uart-micropython/
 ---
 
 ## Roteiro de aprendizado
+![Roadmap do curso](docs/uart_learning_roadmap.svg)
 
 O repositório é dividido em quatro fases. Cada fase constrói sobre a anterior — siga a ordem dos passos.
 

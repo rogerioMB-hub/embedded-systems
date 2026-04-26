@@ -38,12 +38,51 @@ Sair do Shell do Thonny e conectar **duas placas físicas** pelos pinos TX e RX.
 ```
 passo_07_loopback/
 ├── transmissora.py   → grava na Placa A
-└── receptora.py      → grava na Placa B
+├── receptora.py      → grava na Placa B
+└── wokwi/            → simulação sem hardware (ver seção abaixo)
+    ├── main.py
+    ├── diagram.json
+    └── wokwi.toml
 ```
 
 ---
 
-## Como executar
+## Simulação no Wokwi (sem hardware)
+
+Caso não disponha de duas placas físicas, a pasta `wokwi/` oferece uma simulação equivalente usando um único ESP32 no simulador [Wokwi](https://wokwi.com).
+
+A UART1 (transmissora) é conectada internamente à UART2 (receptora) por um fio virtual no `diagram.json` — reproduzindo o mesmo comportamento do loopback físico.
+
+### Conexão interna (fio laranja no diagrama)
+
+```
+GPIO 4 (TX1) ──laranja──► GPIO 16 (RX2)
+```
+
+### Como executar
+
+1. Instalar a extensão **Wokwi for VS Code**
+2. Ativar a licença gratuita: `F1` → `Wokwi: Request Free License`
+3. Abrir a pasta `wokwi/` no VS Code
+4. Pressionar `F1` → `Wokwi: Start Simulator`
+5. Pressionar o botão verde no simulador → LED acende
+
+### O que você verá no console
+
+```
+Passo 07 — Loopback UART iniciado.
+Pressione o botão para acionar o LED.
+[TX] Enviou 0x01 (LIGAR)
+[RX] LED LIGADO
+[TX] Enviou 0x00 (DESLIGAR)
+[RX] LED DESLIGADO
+```
+
+> **Nota:** a simulação Wokwi usa um protocolo simplificado de um byte (`0x01`/`0x00`) para focar no conceito de loopback. O protocolo completo com eco e estatísticas está nos arquivos `transmissora.py` e `receptora.py` para uso com hardware real.
+
+---
+
+## Como executar (hardware real)
 
 ### Preparação
 

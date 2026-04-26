@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "author": "Passo 07 — Loopback UART (Wokwi)",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-v1",
+      "id": "esp32",
+      "top": 0,
+      "left": 0,
+      "attrs": { "env": "micropython" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 160,
+      "left": -90,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 160,
+      "left": 190,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 210,
+      "left": 150,
+      "attrs": { "value": "220" }
+    }
+  ],
+  "connections": [
+    ["esp32:D4",    "esp32:D16",   "orange", []],
+    ["esp32:D13",   "btn1:1.l",    "green",  []],
+    ["esp32:GND.1", "btn1:2.l",    "black",  []],
+    ["esp32:D2",    "led1:A",      "red",    []],
+    ["led1:K",      "r1:1",        "red",    []],
+    ["r1:2",        "esp32:GND.1", "black",  []]
+  ],
+  "dependencies": {}
+}

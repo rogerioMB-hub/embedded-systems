@@ -68,3 +68,4 @@ while True:
             print("[RX] LED DESLIGADO")
 
     time.sleep(0.02)
+print("Hello, ESP32!")

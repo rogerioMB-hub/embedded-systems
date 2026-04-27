@@ -1,44 +1,48 @@
 {
   "version": 1,
-  "author": "Passo 07 — Loopback UART (Wokwi)",
+  "author": "Rogerio M B",
   "editor": "wokwi",
   "parts": [
     {
-      "type": "board-esp32-devkit-v1",
-      "id": "esp32",
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
       "top": 0,
       "left": 0,
-      "attrs": { "env": "micropython" }
-    },
-    {
-      "type": "wokwi-pushbutton",
-      "id": "btn1",
-      "top": 160,
-      "left": -90,
-      "attrs": { "color": "green" }
+      "attrs": { "env": "micropython-20231227-v1.22.0" }
     },
     {
       "type": "wokwi-led",
       "id": "led1",
-      "top": 160,
-      "left": 190,
-      "attrs": { "color": "red" }
+      "top": 34.8,
+      "left": 176.6,
+      "attrs": { "color": "red", "flip": "" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 198.2,
+      "left": -134.4,
+      "attrs": { "color": "green", "xray": "1" }
     },
     {
       "type": "wokwi-resistor",
       "id": "r1",
-      "top": 210,
-      "left": 150,
-      "attrs": { "value": "220" }
+      "top": 158.4,
+      "left": 172.25,
+      "rotate": 90,
+      "attrs": { "value": "330" }
     }
   ],
   "connections": [
-    ["esp32:D4",    "esp32:D16",   "orange", []],
-    ["esp32:D13",   "btn1:1.l",    "green",  []],
-    ["esp32:GND.1", "btn1:2.l",    "black",  []],
-    ["esp32:D2",    "led1:A",      "red",    []],
-    ["led1:K",      "r1:1",        "red",    []],
-    ["r1:2",        "esp32:GND.1", "black",  []]
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "r1:1", "led1:A", "green", [ "v-19.2" ] ],
+    [ "btn1:2.r", "esp:CMD", "black", [ "h48.2", "v-9.4" ] ],
+    [ "esp:4", "esp:16", "green", [ "h33.64", "v-9.6" ] ],
+    [ "esp:17", "esp:5", "green", [ "h33.64", "v-9.6" ] ],
+    [ "esp:13", "btn1:1.r", "green", [ "h-43.01", "v48" ] ],
+    [ "r1:2", "esp:2", "green", [ "v18", "h-29.35", "v-48" ] ],
+    [ "esp:GND.3", "led1:C", "black", [ "h62.44", "h28.4" ] ]
   ],
   "dependencies": {}
 }
